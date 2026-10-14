@@ -4,6 +4,7 @@
         --panel: rgba(255, 255, 255, 0.72);
         --panel-strong: #ffffff;
         --card: rgba(255, 255, 255, 0.68);
+        --card-hover: rgba(255, 255, 255, 0.92);
         --ink: #1e1b1a;
         --muted: #5d5654;
         --soft: #eee2dc;
@@ -14,7 +15,7 @@
         --shadow: 0 20px 60px rgba(35, 25, 20, 0.12);
         --button-plain: #ffffff;
         --button-plain-text: #1e1b1a;
-        --topbar-bg: rgba(245, 240, 240, 0.82);
+        --topbar-bg: rgba(248, 244, 242, 0.82);
         --nav-cta-bg: #1e1b1a;
         --nav-cta-text: #ffffff;
         --button-secondary-bg: #ffffff;
@@ -27,6 +28,7 @@
         --cta-whatsapp-bg: rgba(30, 27, 26, 0.04);
         --cta-whatsapp-text: #1e1b1a;
         --cta-whatsapp-border: rgba(30, 27, 26, 0.14);
+        --particle-rgb: 126, 84, 160;
       }
 
       body[data-theme="dark"] {
@@ -34,7 +36,8 @@
         --bg-strong: #1d1a18;
         --panel: rgba(42, 37, 34, 0.8);
         --panel-strong: #221d1b;
-        --card: rgba(29, 25, 23, 0.9);
+        --card: rgba(255, 255, 255, 0.055);
+        --card-hover: rgba(255, 255, 255, 0.13);
         --ink: #f5efe9;
         --muted: #d2c6c0;
         --soft: #2a2321;
@@ -45,7 +48,7 @@
         --shadow: 0 24px 64px rgba(0, 0, 0, 0.34);
         --button-plain: rgba(255, 255, 255, 0.04);
         --button-plain-text: #f5efe9;
-        --topbar-bg: rgba(28, 23, 21, 0.9);
+        --topbar-bg: rgba(27, 20, 41, 0.82);
         --nav-cta-bg: #e39d6f;
         --nav-cta-text: #24150e;
         --button-secondary-bg: #332925;
@@ -58,6 +61,7 @@
         --cta-whatsapp-bg: rgba(255, 255, 255, 0.08);
         --cta-whatsapp-text: #ffffff;
         --cta-whatsapp-border: rgba(255, 255, 255, 0.12);
+        --particle-rgb: 190, 130, 244;
       }
 
       * { box-sizing: border-box; }
@@ -71,6 +75,26 @@
         color: var(--ink);
         line-height: 1.6;
         transition: background 0.3s ease, color 0.3s ease;
+        isolation: isolate;
+      }
+
+      body[data-theme="dark"] {
+        background: linear-gradient(270deg, #1b1429, #140f23);
+      }
+
+      .background-particles {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      main,
+      body > footer {
+        position: relative;
+        z-index: 0;
       }
 
       img { max-width: 100%; display: block; }
@@ -85,9 +109,17 @@
         position: sticky;
         top: 0;
         z-index: 20;
-        backdrop-filter: blur(12px);
+        background: transparent;
+        border-bottom: 1px solid transparent;
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, backdrop-filter 0.3s ease;
+      }
+
+      .topbar.is-scrolled {
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
         background: var(--topbar-bg);
-        border-bottom: 1px solid var(--line);
+        border-bottom-color: var(--line);
+        box-shadow: 0 10px 24px rgba(9, 5, 29, 0.12);
       }
 
       .nav {
@@ -259,7 +291,7 @@
       .stat {
         padding: 18px 16px;
         border-radius: 18px;
-        background: var(--panel);
+        background: var(--card);
         border: 1px solid var(--line);
       }
 
@@ -388,6 +420,33 @@
         border: 1px solid var(--line);
       }
 
+      .stat,
+      .mini-item,
+      .service-card,
+      .industry-item,
+      .step,
+      .quote,
+      .cta-panel,
+      .image-card,
+      .about-card {
+        transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.5s ease, transform 0.5s ease;
+      }
+
+      .stat:hover,
+      .mini-item:hover,
+      .service-card:hover,
+      .industry-item:hover,
+      .step:hover,
+      .quote:hover,
+      .cta-panel:hover,
+      .image-card:hover,
+      .about-card:hover {
+        background-color: var(--card-hover);
+        border-color: rgba(178, 121, 216, 0.48);
+        box-shadow: 0 4px 12px 5px rgba(129, 72, 144, 0.34);
+        transform: translateY(-3px);
+      }
+
       .mini-badge {
         width: 12px;
         height: 12px;
@@ -489,7 +548,7 @@
       }
 
       .quote {
-        background: var(--panel-strong);
+        background: var(--card);
         border: 1px solid var(--line);
         border-radius: 22px;
         padding: 22px 20px;
@@ -510,7 +569,7 @@
       }
 
       .cta-panel {
-        background: var(--cta-bg);
+        background: var(--card);
         border-radius: 30px;
         padding: 44px 36px;
         display: flex;
