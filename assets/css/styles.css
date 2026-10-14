@@ -699,7 +699,9 @@
           padding: 10px;
           border: 1px solid var(--line);
           border-radius: 16px;
-          background: var(--panel-strong);
+          background: var(--topbar-bg);
+          backdrop-filter: blur(15px);
+          -webkit-backdrop-filter: blur(15px);
           box-shadow: var(--shadow);
         }
 
