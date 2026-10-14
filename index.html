@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -137,6 +137,10 @@
         display: flex;
         align-items: center;
         gap: 12px;
+      }
+
+      .mobile-nav {
+        display: none;
       }
 
       .theme-toggle {
@@ -561,16 +565,86 @@
 
       @media (max-width: 720px) {
         .nav {
-          flex-wrap: wrap;
-          justify-content: center;
-          gap: 18px;
-          padding: 18px 0;
+          min-height: 68px;
+          gap: 12px;
         }
 
-        .nav-links {
-          flex-wrap: wrap;
+        .brand {
+          gap: 9px;
+          font-size: 0.78rem;
+          letter-spacing: 0.02em;
+        }
+
+        .brand-mark {
+          width: 38px;
+          height: 38px;
+          border-radius: 11px;
+          font-size: 0.95rem;
+        }
+
+        .nav-links,
+        .nav-actions > .nav-cta {
+          display: none;
+        }
+
+        .nav-actions {
+          gap: 8px;
+        }
+
+        .theme-toggle {
+          width: 40px;
+          height: 40px;
+        }
+
+        .mobile-nav {
+          display: block;
+          position: relative;
+        }
+
+        .mobile-nav summary {
+          width: 40px;
+          height: 40px;
+          display: grid;
+          place-items: center;
+          border: 1px solid var(--line);
+          border-radius: 50%;
+          color: var(--ink);
+          cursor: pointer;
+          font-size: 1.2rem;
+          list-style: none;
+        }
+
+        .mobile-nav summary::-webkit-details-marker {
+          display: none;
+        }
+
+        .mobile-nav-panel {
+          position: absolute;
+          top: calc(100% + 12px);
+          right: 0;
+          width: min(260px, calc(100vw - 32px));
+          display: grid;
+          gap: 4px;
+          padding: 10px;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          background: var(--panel-strong);
+          box-shadow: var(--shadow);
+        }
+
+        .mobile-nav-panel a {
+          padding: 10px 12px;
+          border-radius: 10px;
+          color: var(--ink);
+        }
+
+        .mobile-nav-panel a:hover {
+          background: var(--card);
+        }
+
+        .mobile-nav-panel .nav-cta {
+          margin-top: 4px;
           justify-content: center;
-          gap: 16px;
         }
 
         .hero { padding-top: 42px; }
@@ -610,6 +684,17 @@
         <div class="nav-actions">
           <button class="theme-toggle" type="button" aria-label="Toggle dark mode">☾</button>
           <a href="#contact" class="nav-cta">Let’s Work Together</a>
+          <details class="mobile-nav">
+            <summary aria-label="Open navigation menu">☰</summary>
+            <nav class="mobile-nav-panel" aria-label="Mobile navigation">
+              <a href="#about">About</a>
+              <a href="#services">Services</a>
+              <a href="#industries">Industries</a>
+              <a href="#process">Process</a>
+              <a href="#contact">Contact</a>
+              <a href="#contact" class="nav-cta">Let’s Work Together</a>
+            </nav>
+          </details>
         </div>
       </div>
     </header>
@@ -836,7 +921,7 @@
             </div>
 
             <div class="cta-actions">
-              <a href="mailto:hello@reginemacabenta.com" class="button primary">Email Me</a>
+              <a id="email-link" href="mailto:macabentaregines@gmail.com" class="button primary">Email Me</a>
               <a href="https://wa.me/" target="_blank" rel="noreferrer" class="button secondary" style="background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.12);">WhatsApp</a>
             </div>
           </div>
@@ -861,6 +946,22 @@
 
         root.setAttribute('data-theme', initialTheme);
         toggle.textContent = initialTheme === 'dark' ? '☀' : '☾';
+
+        const emailLink = document.querySelector('#email-link');
+        const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        if (!isMobile) {
+          emailLink.href = 'https://mail.google.com/mail/?view=cm&fs=1&to=macabentaregines%40gmail.com';
+          emailLink.target = '_blank';
+          emailLink.rel = 'noopener noreferrer';
+        }
+
+        mobileNav.querySelectorAll('a').forEach(function (link) {
+          link.addEventListener('click', function () {
+            mobileNav.open = false;
+          });
+        });
 
         toggle.addEventListener('click', function () {
           const current = root.getAttribute('data-theme');
